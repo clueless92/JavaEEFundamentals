@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>#{msgs['default.title']}</title>
+	<link href="#{application.contextPath}/css/common.css" rel="stylesheet"
+		type="text/css" />
+	<link href="#{application.contextPath}/css/bootstrap.css"
+		rel="stylesheet" type="text/css" />
+</h:head>
+<body>
+	<h:form styleClass="welcomeForm">
+		<b>Welcome #{LOGGED_USER.firstName} #{ LOGGED_USER.lastName}</b>
+		<br clear="all" />
+		<br />
+		<h:panelGroup layout="block">
+			<p:commandButton ajax="false" action="#{loginBean.logout}"
+				styleClass="btn btn-info" value="Logout" style="margin: 5% 0 5% 0;" />
+		</h:panelGroup>
+	</h:form>
+</body>
+</html>

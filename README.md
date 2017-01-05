@@ -1,1 +1,1 @@
-JavaEEFundamentals
+Projects from the Java EE Fundamentals course at SoftUni.

@@ -1,19 +1,19 @@
 package bg.tilchev.web.beans;
 
 import java.util.Iterator;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
-import bg.tilchev.dto.UserDto;
-import bg.tilchev.repos.UserRepo;
+import bg.tilchev.entity.User;
+import bg.tilchev.service.UserService;
+import bg.tilchev.web.utils.GeneralUtils;
 import bg.tilchev.web.utils.MessageUtils;
 
 @ManagedBean(name = "createUserBean")
@@ -23,10 +23,10 @@ public class CreateUserBean {
 	@Inject
 	HttpServletRequest request;
 
-	@ManagedProperty("#{userRepo}")
-	private UserRepo userRepo;
+	@EJB
+    UserService userService;
 
-	private UserDto user;
+	private User user;
 
 	private String operationType;
 
@@ -35,30 +35,24 @@ public class CreateUserBean {
 
 	@PostConstruct
 	public void init() {
-		user = new UserDto();
+		user = new User();
 	}
 
 	public String createAction() {
 		if (!validate()) {
 			return null;
 		}
-		userRepo.getUsers().add(user);
+		String encryptedPass = GeneralUtils.encodeMd5(this.user.getPassword());
+		this.user.setPassword(encryptedPass);
+		userService.save(this.user);
 		return "/page/listUsers?faces-redirect=true";
 	}
 
-	public UserRepo getUserRepo() {
-		return userRepo;
-	}
-
-	public void setUserRepo(UserRepo userRepo) {
-		this.userRepo = userRepo;
-	}
-
-	public UserDto getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(UserDto user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

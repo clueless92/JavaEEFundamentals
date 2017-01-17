@@ -23,5 +23,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-5.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-extensions-3.2.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/redmond-1.0.9.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TestEclipseEEEJB"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

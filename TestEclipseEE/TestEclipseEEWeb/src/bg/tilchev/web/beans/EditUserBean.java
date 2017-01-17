@@ -3,16 +3,17 @@ package bg.tilchev.web.beans;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
-import bg.tilchev.dto.UserDto;
-import bg.tilchev.repos.UserRepo;
+import bg.tilchev.entity.User;
+import bg.tilchev.service.UserService;
+import bg.tilchev.web.utils.GeneralUtils;
 import bg.tilchev.web.utils.MessageUtils;
 
 @ManagedBean(name = "editUserBean")
@@ -24,54 +25,38 @@ public class EditUserBean {
 
 	@Inject
 	HttpServletRequest request;
+	
+	@EJB
+    UserService userService;
 
-	@ManagedProperty("#{userRepo}")
-	private UserRepo userRepo;
-
-	private UserDto user;
+	private User user;
 
 	private String operationType;
 
 	@PostConstruct
 	public void init() {
-		String username = request.getParameter("username");
-
-		if (StringUtils.isBlank(username)) {
-			this.user = new UserDto();
-			this.setOperationType("edit");
-		} else {
-			for (UserDto currUser : userRepo.getUsers()) {
-				if (currUser.getUsername().equals(username)) {
-					this.user = currUser;
-					break;
-				}
-			}
-			this.setOperationType("update");
+		String id = request.getParameter("id");
+		if (StringUtils.isNotBlank(id) && StringUtils.isNumeric(id)) {
+			this.user = userService.findById(Long.parseLong(id));
 		}
 	}
 
 	public String updateAction() {
-
-		if (!validate()) {
+		if (!this.validate()) {
 			return null;
 		}
+		String encryptedPass = GeneralUtils.encodeMd5(this.user.getPassword());
+		this.user.setPassword(encryptedPass);
+		userService.update(this.user);
 
 		return "/page/listUsers?faces-redirect=true";
 	}
 
-	public UserRepo getUserRepo() {
-		return this.userRepo;
-	}
-
-	public void setUserRepo(UserRepo userRepo) {
-		this.userRepo = userRepo;
-	}
-
-	public UserDto getUser() {
+	public User getUser() {
 		return this.user;
 	}
 
-	public void setUser(UserDto user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

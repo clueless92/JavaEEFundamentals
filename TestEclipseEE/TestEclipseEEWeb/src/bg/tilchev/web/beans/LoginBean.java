@@ -1,15 +1,21 @@
 package bg.tilchev.web.beans;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import bg.tilchev.dto.UserDto;
-import bg.tilchev.repos.UserRepo;
+
+import bg.tilchev.entity.Post;
+import bg.tilchev.entity.User;
+import bg.tilchev.service.PostService;
+import bg.tilchev.service.UserService;
+import bg.tilchev.web.utils.GeneralUtils;
 import bg.tilchev.web.utils.MessageUtils;
 
 @ManagedBean(name = "loginBean")
@@ -25,8 +31,10 @@ public class LoginBean implements Serializable {
 	@Inject
 	private HttpServletRequest request;
 	
-	@ManagedProperty("#{userRepo}")
-	private UserRepo userRepo;
+    @EJB
+    UserService userService;
+    @EJB
+    PostService postService;
 
 	private String username;
 	private String password;
@@ -50,22 +58,44 @@ public class LoginBean implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-    public UserRepo getUserRepo() {
-        return this.userRepo;
-    }
-
-    public void setUserRepo(UserRepo userRepo) {
-        this.userRepo = userRepo;
-    }
 
 	@PostConstruct
 	public void init() {
-		// TODO
+    	List<User> users = this.userService.findAllUsers();
+    	if(users != null && users.size() > 0) {
+    		// data already seeded
+    		return;
+    	}
+		User initUser = new User();
+		initUser.setUsername("admin");
+		initUser.setPassword(GeneralUtils.encodeMd5("123"));
+		initUser.setFirstName("BashPesho");
+		initUser.setLastName("BashPeshov");
+		initUser.setEmail("bpesho@gmail.com");
+		this.userService.save(initUser);
+		for (int i = 0; i < 14; i++) {
+			User newUser = new User();
+			newUser.setUsername("user" + i);
+			newUser.setPassword(GeneralUtils.encodeMd5("tajna"));
+			newUser.setFirstName("Pesho" + i);
+			newUser.setLastName("Peshov" + i);
+			newUser.setEmail("pesho" + i + "@gmail.com");
+			this.userService.save(newUser);
+			for (int p = 0; p < i; p++) {
+				Post newPost = new Post();
+				Date date = new Date();
+				newPost.setContent("Content on: " + date.toString());
+				newPost.setDate(date);
+				newPost.setTitle("Title on: " + date.toString());
+				newPost.setAuthor(newUser);
+				postService.save(newPost);
+			}
+		}
 	}
 
 	public String login() {
-		UserDto user = this.userRepo.validateUser(this.username, this.password);
+		String encryptedPass = GeneralUtils.encodeMd5(this.password);
+		User user = this.userService.loginUser(this.username, encryptedPass);
 
         if (user == null) {
             MessageUtils.addErrorMessage("login.error.invalid.credentials");

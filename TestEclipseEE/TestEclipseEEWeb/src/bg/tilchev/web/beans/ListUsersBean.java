@@ -3,19 +3,18 @@ package bg.tilchev.web.beans;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-
-import bg.tilchev.dto.UserDto;
-import bg.tilchev.repos.UserRepo;
+import bg.tilchev.entity.User;
+import bg.tilchev.service.UserService;
 
 @ManagedBean(name = "listUsersBean")
 @ViewScoped
 public class ListUsersBean {
 	
-	@ManagedProperty("#{userRepo}")
-	private UserRepo userRepo;
+	@EJB
+    UserService userService;
 
 	@PostConstruct
 	public void init() {
@@ -29,15 +28,7 @@ public class ListUsersBean {
 		return "/page/createUser";
 	}
 	
-	public List<UserDto> getUsers() {
-		return this.userRepo.getUsers();
-	}
-
-	public UserRepo getUserRepo() {
-		return this.userRepo;
-	}
-
-	public void setUserRepo(UserRepo userRepo) {
-		this.userRepo = userRepo;
+	public List<User> getUsers() {
+		return this.userService.findAllUsersAndPostsCount();
 	}
 }

@@ -24,7 +24,7 @@
 				<p:inputText value="#{loginBean.username}" id="username"
 					styleClass="loginInputField" required="true"
 					requiredMessage="Username is required">
-					<p:watermark for="username" value="Username" />
+					<p:watermark for="username" value="#{msgs['user.username']}" />
 				</p:inputText>
 			</h:panelGroup>
 			<br clear="all" />
@@ -33,7 +33,7 @@
 				<p:password value="#{loginBean.password}" id="password"
 					styleClass="loginInputField" required="true"
 					requiredMessage="Password is required">
-					<p:watermark for="password" value="#{msgs['button.logout']}" />
+					<p:watermark for="password" value="#{msgs['user.password']}" />
 				</p:password>
 			</h:panelGroup>
 			<br clear="all" />

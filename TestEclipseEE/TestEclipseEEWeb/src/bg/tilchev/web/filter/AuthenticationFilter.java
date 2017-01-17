@@ -12,7 +12,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import bg.tilchev.dto.UserDto;
+import bg.tilchev.entity.User;
+
+//import bg.tilchev.dto.UserDto;
 
 public class AuthenticationFilter implements Filter, Serializable {
 
@@ -67,7 +69,7 @@ public class AuthenticationFilter implements Filter, Serializable {
 		 * Get logged user from the HttpSession
 		 */
 		HttpSession session = httpRequest.getSession();
-		UserDto loggedUsername = (UserDto) session.getAttribute("LOGGED_USER");
+		User loggedUsername = (User) session.getAttribute("LOGGED_USER");
 
 		/*
 		 * Redirect to login page if there is no logged user and trying to

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="hibernate.cfg.xml/Hibernate">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="issue_tracker_demo">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="bank_system"/>
+    <schema id="4" parent="1" name="bills_payment_system"/>
+    <schema id="5" parent="1" name="bookshop"/>
+    <schema id="6" parent="1" name="car_rental"/>
+    <schema id="7" parent="1" name="diablo"/>
+    <schema id="8" parent="1" name="escape_code"/>
+    <schema id="9" parent="1" name="geography"/>
+    <schema id="10" parent="1" name="gringotts"/>
+    <schema id="11" parent="1" name="hospital"/>
+    <schema id="12" parent="1" name="hotel"/>
+    <schema id="13" parent="1" name="information_schema"/>
+    <schema id="14" parent="1" name="midterm_exam"/>
+    <schema id="15" parent="1" name="minions"/>
+    <schema id="16" parent="1" name="minions_db"/>
+    <schema id="17" parent="1" name="movies"/>
+    <schema id="18" parent="1" name="mysql"/>
+    <schema id="19" parent="1" name="online_store"/>
+    <schema id="20" parent="1" name="orm_code_first"/>
+    <schema id="21" parent="1" name="performance_schema"/>
+    <schema id="22" parent="1" name="photo_share_system"/>
+    <schema id="23" parent="1" name="sakila"/>
+    <schema id="24" parent="1" name="school"/>
+    <schema id="25" parent="1" name="softuni"/>
+    <schema id="26" parent="1" name="soft_uni"/>
+    <schema id="27" parent="1" name="student_system"/>
+    <schema id="28" parent="1" name="sys"/>
+    <schema id="29" parent="1" name="testing"/>
+    <schema id="30" parent="1" name="test_eclipse_ee"/>
+    <schema id="31" parent="1" name="the_nerd_herd"/>
+    <schema id="32" parent="1" name="university"/>
+    <schema id="33" parent="1" name="world"/>
+    <table id="34" parent="2" name="issues"/>
+    <table id="35" parent="2" name="users"/>
+    <table id="36" parent="2" name="users_issues"/>
+    <column id="37" parent="34" name="issue_id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="38" parent="34" name="name">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="39" parent="34" name="project">
+      <Position>3</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="40" parent="34" name="priority">
+      <Position>4</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="41" parent="34" name="type">
+      <Position>5</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="42" parent="34" name="state">
+      <Position>6</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="43" parent="34" name="sprint">
+      <Position>7</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="44" parent="34" name="story_points">
+      <Position>8</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="45" parent="34" name="name">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="46" parent="34" name="PRIMARY">
+      <ColNames>issue_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="47" parent="34" name="name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>name</UnderlyingIndexName>
+    </key>
+    <column id="48" parent="35" name="user_id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="49" parent="35" name="name">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="50" parent="35" name="name">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="51" parent="35" name="PRIMARY">
+      <ColNames>user_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="52" parent="35" name="name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>name</UnderlyingIndexName>
+    </key>
+    <column id="53" parent="36" name="user_id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="54" parent="36" name="issue_id">
+      <Position>2</Position>
+      <DataType>bigint(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="55" parent="36" name="FKD3AE88D11C9B07E0">
+      <ColNames>issue_id</ColNames>
+    </index>
+    <index id="56" parent="36" name="FKD3AE88D17AF5B854">
+      <ColNames>user_id</ColNames>
+    </index>
+    <key id="57" parent="36" name="PRIMARY">
+      <ColNames>user_id
+issue_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="58" parent="36" name="FKD3AE88D17AF5B854">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>issue_tracker_demo</RefSchemaName>
+      <RefTableName>users</RefTableName>
+      <RefColNames>user_id</RefColNames>
+    </foreign-key>
+    <foreign-key id="59" parent="36" name="FKD3AE88D11C9B07E0">
+      <ColNames>issue_id</ColNames>
+      <RefSchemaName>issue_tracker_demo</RefSchemaName>
+      <RefTableName>issues</RefTableName>
+      <RefColNames>issue_id</RefColNames>
+    </foreign-key>
+  </database-model>
+</dataSource>

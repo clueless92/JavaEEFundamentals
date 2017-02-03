@@ -1,1 +1,1 @@
-Projects from the Java EE Fundamentals course at SoftUni.
+Projects from the Java EE Fundamentals course at SoftUni and other java web projects (apache struts MVC 1.3 issue tracker demo).

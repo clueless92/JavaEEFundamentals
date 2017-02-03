@@ -1,8 +1,0 @@
-bg\tilchev\models\UserDto.class
-bg\tilchev\hibernate\HibernateServlet.class
-bg\tilchev\actions\HomeAction.class
-bg\tilchev\hibernate\HibernateUtil.class
-bg\tilchev\repos\UserRepoImpl.class
-bg\tilchev\forms\HomeForm.class
-bg\tilchev\models\User.class
-bg\tilchev\repos\UserRepo.class
